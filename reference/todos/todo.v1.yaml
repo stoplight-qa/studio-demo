@@ -14,8 +14,26 @@ info:
 servers:
   - url: 'https://todos.stoplight.io'
     description: Production
-  - description: Sandbox
-    url: 'https://todos-sandbox.stoplight.io'
+  - description: Durable Dev Environment 
+    url: 'https://{environment}.stoplight.io:{port}'
+    variables:
+      environment:
+        description: The type of durable environment
+        enum:
+          - staging
+          - integration
+          - pre-prod
+        default: pre-prod
+      port:
+        enum:
+          - "80"
+          - "443"
+        default: "443"
+  - description: PR Environment
+    url: 'https://x-{pr-number}.dev.stoplight.io'
+    variables:
+      pr-number:
+        default: "1"
 paths:
   /todos:
     get:
